@@ -48,10 +48,19 @@ rm fastclaw.tar.gz
 
 ## 🔑 Post-Installation & API Key Setup
 
-After installation, you **must** configure your FastClaw API Key. Do not use Python wrappers; call the binary directly.
+After installation, you **must** configure your FastClaw API Key.
 
-### Option 1: Set Environment Variable (Recommended)
-This allows you to run `fastclaw` from any terminal session without re-entering the key.
+### Option 1: Use Config File (Recommended 🚀)
+This is the most reliable method as it works across all terminal sessions and non-interactive environments (like AI tool executions).
+
+```bash
+# Save your API key once, and it will be used automatically
+fastclaw config set-key "YOUR_API_KEY_HERE"
+```
+*Stored in: `~/.fastclaw_config`*
+
+### Option 2: Set Environment Variable
+Useful for CI/CD or temporary environments.
 
 **Windows:**
 ```powershell
@@ -65,14 +74,15 @@ echo 'export FASTCLAW_API_KEY="YOUR_API_KEY_HERE"' >> ~/.bashrc # or ~/.zshrc
 source ~/.bashrc
 ```
 
-### Option 2: Use Flags (Per Command)
+### Option 3: Use Flags (Per Command)
 ```bash
 fastclaw <command> --api-key YOUR_API_KEY_HERE
 ```
 
 ## ✅ Verification
-Check if the installation was successful:
+Check if the installation was successful and the key is recognized:
 ```bash
+fastclaw config set-key "test_key"
 fastclaw version
 ```
 
@@ -81,5 +91,6 @@ If you are an AI agent installing this tool:
 1. Identify the current OS and architecture.
 2. Fetch the latest release version from GitHub API if version is not provided.
 3. Download, extract, and place the `fastclaw` binary in a directory within the system PATH.
-4. Prompt the user for their `FASTCLAW_API_KEY` and store it in the environment.
-5. Verify the installation by running `fastclaw version`.
+4. Prompt the user for their `FASTCLAW_API_KEY`.
+5. **Run `fastclaw config set-key <KEY>` to ensure the tool works in non-interactive shells.**
+6. Verify the installation by running `fastclaw version`.

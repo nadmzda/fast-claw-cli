@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/spf13/cobra"
@@ -13,6 +15,20 @@ var (
 	verbose bool
 	version = "dev" // LDFlags를 통해 빌드 시 주입됨
 )
+
+// loadConfigFromFile checks for a config file in the user's home directory
+func loadConfigFromFile() string {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return ""
+	}
+	configPath := filepath.Join(home, ".fastclaw_config")
+	data, err := os.ReadFile(configPath)
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(data))
+}
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
@@ -32,8 +48,14 @@ func Execute() {
 }
 
 func init() {
+	// Priority: Flag > Env > Config File
+	defaultKey := os.Getenv("FASTCLAW_API_KEY")
+	if defaultKey == "" {
+		defaultKey = loadConfigFromFile()
+	}
+
 	// Persistent flags (available to all subcommands)
-	RootCmd.PersistentFlags().StringVarP(&apiKey, "api-key", "k", os.Getenv("FASTCLAW_API_KEY"), "FastClaw API Key (env: FASTCLAW_API_KEY)")
+	RootCmd.PersistentFlags().StringVarP(&apiKey, "api-key", "k", defaultKey, "FastClaw API Key (env: FASTCLAW_API_KEY, file: ~/.fastclaw_config)")
 	RootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "V", false, "Verbose output")
 }
 
