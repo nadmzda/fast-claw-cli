@@ -34,3 +34,4 @@ db.ini
 # Project specific
 upload_state_*.json
 AICMD/
+dist/
