@@ -35,5 +35,5 @@ if (Test-Path $exePath) {
     Write-Host "[OK] Successfully installed FastClaw CLI!" -ForegroundColor Green
     Write-Host "[INFO] Please restart your terminal or run: `$env:Path = [System.Environment]::GetEnvironmentVariable('Path','User')`" -ForegroundColor Yellow
 } else {
-    Write-Error "[ERROR] Installation failed: fastclaw.exe not found."
+    Write-Error "[FAILED] Installation failed: fastclaw.exe not found."
 }
