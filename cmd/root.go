@@ -16,6 +16,14 @@ var (
 	version = "dev" // LDFlags를 통해 빌드 시 주입됨
 )
 
+// maskKey partially masks an API key for display (e.g. "sk-fc-648...3ba7")
+func maskKey(key string) string {
+	if len(key) <= 16 {
+		return key
+	}
+	return key[:9] + "..." + key[len(key)-4:]
+}
+
 // loadConfigFromFile checks for a config file in the user's home directory
 func loadConfigFromFile() string {
 	home, err := os.UserHomeDir()
@@ -55,7 +63,12 @@ func init() {
 	}
 
 	// Persistent flags (available to all subcommands)
-	RootCmd.PersistentFlags().StringVarP(&apiKey, "api-key", "k", defaultKey, "FastClaw API Key (env: FASTCLAW_API_KEY, file: ~/.fastclaw_config)")
+	keyDisplay := "not set"
+	if defaultKey != "" {
+		keyDisplay = maskKey(defaultKey)
+	}
+	RootCmd.PersistentFlags().StringVarP(&apiKey, "api-key", "k", defaultKey, fmt.Sprintf("FastClaw API Key (env: FASTCLAW_API_KEY, file: ~/.fastclaw_config, current: %s)", keyDisplay))
+	RootCmd.PersistentFlags().Lookup("api-key").DefValue = ""
 	RootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "V", false, "Verbose output")
 }
 
