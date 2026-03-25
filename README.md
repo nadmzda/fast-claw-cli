@@ -10,6 +10,7 @@ Built with Go, it is fast, lightweight, and distributed as a single binary for e
 - 📁 **Smart File Upload**: Automatic detection of file size. Single upload for <20MB, and Multipart upload for larger files.
 - 👁️ **NVIDIA Vision Analysis**: Analyze image URLs or upload local images automatically for OCR and detailed descriptions.
 - 🎨 **AI Image Generation**: Generate high-quality images using Gemini 3.1 and ultra-fast Riverflow models.
+- 🎵 **AI Music Generation**: Create original songs with custom style, lyrics, and vocals using Suno AI.
 - 🔍 **Specialized Search**: Tailored outputs for Google News, Images, and Maps (Places, ratings, etc.).
 - 🏢 **Workspace Integration**: Full support for Gmail, Calendar, Drive, Sheets, Tasks, and Notion.
 - 📱 **Social Automation**: Post to Instagram Business and manage Reddit submissions/comments.
@@ -57,7 +58,16 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 ./fastclaw riverflow "Cute robot cat"
 ```
 
-### 3. Google Search (Specialized)
+### 3. AI Music Generation (Suno)
+```powershell
+# Generate a song (auto lyrics)
+./fastclaw music "여름 바다로 떠나는 신나는 여행" --style "K-Pop, Dance, Upbeat" --title "Summer Wave" --email user@example.com --vocal Female
+
+# Check Suno API health
+./fastclaw music health
+```
+
+### 4. Google Search (Specialized)
 ```powershell
 # Standard search
 ./fastclaw search "Fast-Claw API"
@@ -69,7 +79,7 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 ./fastclaw search news "latest AI trends 2026"
 ```
 
-### 4. Workspace & Social
+### 5. Workspace & Social
 ```powershell
 # Add Calendar event (NLP support)
 ./fastclaw google calendar add "Tomorrow at 2pm meeting with team"
@@ -92,9 +102,36 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 | `google` | Manage Calendar, Drive, Sheets, Tasks |
 | `image` | High-quality image generation (Gemini) |
 | `riverflow` | Fast image generation (Riverflow) |
+| `music` | AI music generation (Suno) |
 | `scrape` | Extract text from any web page |
 | `notion` | Create and search Notion pages |
 | `social` | Instagram & Reddit management |
+
+## 🏗 Build & Release
+
+This project uses [GoReleaser](https://goreleaser.com) for automated cross-platform builds and GitHub releases.
+
+### Local Build
+```powershell
+go build -o fastclaw.exe main.go
+```
+
+### Release Process
+1. Commit changes to `main`
+2. Create a version tag (e.g. `v1.1.0`)
+3. Run GoReleaser to build and publish
+
+```powershell
+git add .
+git commit -m "feat: description"
+git tag v1.1.0
+goreleaser release --clean
+git push origin main --tags
+```
+
+GoReleaser builds binaries for **linux**, **darwin**, **windows** × **amd64**, **arm64** and publishes them to [GitHub Releases](https://github.com/nadmzda/fast-claw-cli/releases).
+
+> Requires `GITHUB_TOKEN` environment variable set for publishing.
 
 ## 🤝 Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests to help improve FastClaw CLI.
