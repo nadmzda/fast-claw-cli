@@ -2,7 +2,7 @@
 $repo = "nadmzda/fast-claw-cli"
 $ErrorActionPreference = "Stop"
 
-Write-Host "🔍 Fetching latest version info from GitHub..." -ForegroundColor Cyan
+Write-Host "[INFO] Fetching latest version info from GitHub..." -ForegroundColor Cyan
 $latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases/latest"
 $version = $latestRelease.tag_name
 $versionNum = $version.TrimStart("v")
@@ -17,10 +17,10 @@ if (!(Test-Path $destDir)) {
     New-Item -ItemType Directory -Path $destDir -Force | Out-Null 
 }
 
-Write-Host "🚀 Downloading FastClaw CLI $version ($arch)..." -ForegroundColor Cyan
+Write-Host "[INFO] Downloading FastClaw CLI $version ($arch)..." -ForegroundColor Cyan
 Invoke-WebRequest -Uri $url -OutFile "$destDir\fastclaw.zip"
 
-Write-Host "📦 Extracting files..." -ForegroundColor Cyan
+Write-Host "[INFO] Extracting files..." -ForegroundColor Cyan
 Expand-Archive -Path "$destDir\fastclaw.zip" -DestinationPath $destDir -Force
 Remove-Item "$destDir\fastclaw.zip"
 
@@ -30,10 +30,10 @@ if (Test-Path $exePath) {
     if ($currentPath -notlike "*$destDir*") {
         [Environment]::SetEnvironmentVariable("Path", "$currentPath;$destDir", "User")
         $env:Path += ";$destDir"
-        Write-Host "✅ Added $destDir to User PATH." -ForegroundColor Green
+        Write-Host "[OK] Added $destDir to User PATH." -ForegroundColor Green
     }
-    Write-Host "✨ Successfully installed FastClaw CLI!" -ForegroundColor Green
-    Write-Host "👉 Please restart your terminal or run: `$env:Path = [System.Environment]::GetEnvironmentVariable('Path','User')`" -ForegroundColor Yellow
+    Write-Host "[OK] Successfully installed FastClaw CLI!" -ForegroundColor Green
+    Write-Host "[INFO] Please restart your terminal or run: `$env:Path = [System.Environment]::GetEnvironmentVariable('Path','User')`" -ForegroundColor Yellow
 } else {
-    Write-Error "❌ Installation failed: fastclaw.exe not found."
+    Write-Error "[ERROR] Installation failed: fastclaw.exe not found."
 }
