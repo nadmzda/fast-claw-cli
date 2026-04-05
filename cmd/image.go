@@ -58,6 +58,6 @@ type ImageResponse struct {
 
 func init() {
 	imageCmd.Flags().StringVarP(&imageAspectRatio, "ratio", "r", "1:1", "Aspect ratio (1:1, 4:3, 3:4, 16:9, 9:16)")
-	imageCmd.Flags().StringVar(&imageResolution, "resolution", "1024x1024", "Image resolution")
+	imageCmd.Flags().StringVar(&imageResolution, "resolution", "1K", "Image resolution (512, 1K, 2K, 4K)")
 	RootCmd.AddCommand(imageCmd)
 }

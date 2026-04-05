@@ -29,6 +29,18 @@ go build -o fastclaw.exe main.go
 $env:FASTCLAW_API_KEY="your_api_key_here"
 ```
 
+### 3. 셀프 업데이트
+FastClaw CLI를 최신 버전으로 업데이트하려면:
+```powershell
+./fastclaw update
+```
+
+### 3. 셀프 업데이트
+FastClaw CLI를 최신 버전으로 업데이트하려면:
+```powershell
+./fastclaw update
+```
+
 ## 🔑 인증 및 연결
 
 - **API Key**: [FastClaw 대시보드](https://fast-claw.xyz)에서 발급받은 키가 필요합니다.
@@ -52,6 +64,9 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 ```powershell
 # 고품질 이미지 생성 (Gemini)
 ./fastclaw image "A futuristic Seoul city with flying cars" --ratio 16:9
+
+# 해상도 지정 (512, 1K, 2K, 4K)
+./fastclaw image "A futuristic Seoul city" --ratio 16:9 --resolution 2K
 
 # 초고속 미리보기 이미지 생성 (Riverflow)
 ./fastclaw riverflow "Cute robot cat"
@@ -105,6 +120,8 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 | `scrape` | 웹 페이지 텍스트 데이터 추출 |
 | `notion` | Notion 페이지 생성 및 검색 |
 | `social` | Instagram 및 Reddit 연동 |
+| `update` | 최신 버전으로 셀프 업데이트 |
+| `update` | 최신 버전으로 셀프 업데이트 |
 
 ## 🏗 빌드 & 릴리즈
 

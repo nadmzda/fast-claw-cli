@@ -30,6 +30,12 @@ To avoid entering your API key every time, set it as an environment variable.
 $env:FASTCLAW_API_KEY="your_api_key_here"
 ```
 
+### 3. Self-Update
+To update FastClaw CLI to the latest version:
+```powershell
+./fastclaw update
+```
+
 ## 🔑 Authentication & Setup
 
 - **API Key**: You need a key from the [FastClaw Dashboard](https://fast-claw.xyz).
@@ -53,6 +59,9 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 ```powershell
 # High-quality image (Gemini)
 ./fastclaw image "A futuristic Seoul city with flying cars" --ratio 16:9
+
+# With custom resolution (512, 1K, 2K, 4K)
+./fastclaw image "A futuristic Seoul city" --ratio 16:9 --resolution 2K
 
 # Fast preview image (Riverflow)
 ./fastclaw riverflow "Cute robot cat"
@@ -106,6 +115,8 @@ $env:FASTCLAW_API_KEY="your_api_key_here"
 | `scrape` | Extract text from any web page |
 | `notion` | Create and search Notion pages |
 | `social` | Instagram & Reddit management |
+| `update` | Self-update to the latest version |
+| `update` | Self-update to the latest version |
 
 ## 🏗 Build & Release
 
