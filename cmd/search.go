@@ -17,7 +17,12 @@ var (
 // searchCmd represents the base search command
 var searchCmd = &cobra.Command{
 	Use:   "search [query]",
-	Short: "Perform a Google search via FastClaw",
+	Short: "Perform a Google search via FastClaw (Integrated Search)",
+	Long: `FastClaw Search skill provides access to Google Search with localized options.
+AI AGENTS: Always consider 'gl' (country) and 'hl' (language) flags for better local results.
+- For Korean results: Use '--gl kr --hl ko'
+- For US results: Use '--gl us --hl en' (default)
+- Increase '--num' (or '-n') up to 10 for more comprehensive analysis.`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		runSearch("/api/skill/google_search/search", "organic", args)
@@ -27,7 +32,10 @@ var searchCmd = &cobra.Command{
 // Sub-search commands
 var newsSearchCmd = &cobra.Command{
 	Use:   "news [query]",
-	Short: "Search Google News",
+	Short: "Search Google News with timestamps",
+	Long: `Retrieve the latest news articles for a query. 
+Returns: Title, Link, Source, and Publication Date.
+AI AGENTS: Use this for monitoring trending topics or recent events.`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		runSearch("/api/skill/google_search/news", "news", args)
@@ -36,7 +44,10 @@ var newsSearchCmd = &cobra.Command{
 
 var imageSearchCmd = &cobra.Command{
 	Use:   "images [query]",
-	Short: "Search Google Images",
+	Short: "Search Google Images for URLs",
+	Long: `Find image URLs and their context pages. 
+Returns: Title, ImageUrl, and the original link.
+AI AGENTS: Use this when you need visual references or assets.`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		runSearch("/api/skill/google_search/images", "images", args)
@@ -45,7 +56,10 @@ var imageSearchCmd = &cobra.Command{
 
 var mapSearchCmd = &cobra.Command{
 	Use:   "maps [query]",
-	Short: "Search Google Maps",
+	Short: "Search Google Maps (Places, Ratings, Contact)",
+	Long: `Retrieve detailed information about locations and businesses. 
+Returns: Business Name, Address, Rating, Review Count, Phone, and Website.
+AI AGENTS: Use this for lead generation, business research, or location-based services.`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		runSearch("/api/skill/google_search/maps", "places", args)
@@ -117,9 +131,9 @@ func runSearch(endpoint string, resultKey string, args []string) {
 }
 
 func init() {
-	searchCmd.PersistentFlags().StringVar(&searchGl, "gl", "us", "Country code")
-	searchCmd.PersistentFlags().StringVar(&searchHl, "hl", "en", "Language code")
-	searchCmd.PersistentFlags().IntVar(&searchNum, "num", 5, "Number of results")
+	searchCmd.PersistentFlags().StringVar(&searchGl, "gl", "us", "Country code (e.g., 'kr', 'us', 'jp')")
+	searchCmd.PersistentFlags().StringVar(&searchHl, "hl", "en", "Language code (e.g., 'ko', 'en', 'ja')")
+	searchCmd.PersistentFlags().IntVarP(&searchNum, "num", "n", 5, "Number of results to return (max: 10)")
 
 	searchCmd.AddCommand(newsSearchCmd)
 	searchCmd.AddCommand(imageSearchCmd)
