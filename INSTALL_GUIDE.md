@@ -18,9 +18,14 @@ Automatically detects your OS and architecture, downloads the latest version, an
 iwr -useb https://raw.githubusercontent.com/nadmzda/fast-claw-cli/main/install.ps1 | iex
 ```
 
-**Linux / macOS (Bash):**
+**Linux (Bash):**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/nadmzda/fast-claw-cli/main/install.sh | bash
+```
+
+**macOS (Bash):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/nadmzda/fast-claw-cli/main/install-macos.sh | bash
 ```
 
 ---
